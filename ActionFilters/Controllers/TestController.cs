@@ -8,31 +8,18 @@ namespace ActionFilters.Controllers
     public class TestController : Controller
     {
 
-        [ServiceFilter(typeof(SampleActionFilter))]
-        [HttpGet("get")]
-        public ActionResult<string> Get()
+        [HttpGet("view")]
+        [AuthorizationFilter]
+        public IActionResult ViewReport()
         {
-            return Ok(new { success = true, message = "Test message!" });
+            return Ok(new { success = true, message = "Report data" });
         }
 
-        [HttpGet ("gettest")]
-        public ActionResult<string> GetTest()
+        [HttpGet("export")]
+        [AuthorizationFilter]
+        public IActionResult ExportReport()
         {
-            return Ok(new { success = true, message = "Test message!" });
-        }
-
-        [ServiceFilter(typeof(SampleAsyncActionFilter))]
-        [HttpGet("gettestasync")]
-        public ActionResult<string> GetTestAsync()
-        {
-            return Ok(new { success = true, message = "Test message!" });
-        }
-
-        [ResponseHeader("Filter-Header", "Filter Value")]
-        [HttpGet("GetActionAttribute")]
-        public ActionResult<string> GetActionAttribute()
-        {
-            return Ok(new { success = true, message = "Test message!" });
+            return Ok(new { success = true, message = "Report exported" });
         }
     }
 }
